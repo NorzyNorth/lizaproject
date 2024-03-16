@@ -1,0 +1,72 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Schedule {
+    lessonCode                String       @id @unique
+    lessonType                String
+    group                     String
+    timeCode                  String
+    weekCode                  String
+    Teachers                  Teachers?    @relation(fields: [teachersTeacherCode], references: [teacherCode])
+    teachersTeacherCode       String?
+    Disciplines               Disciplines? @relation(fields: [disciplinesDisciplineCode], references: [disciplineCode])
+    disciplinesDisciplineCode String?
+}
+
+model Disciplines {
+    disciplineCode         String        @id @unique
+    name                   String
+    hoursLK                String
+    hoursPZ                String
+    hoursLR                String
+    hoursKP                String
+    hoursDiplom            String
+    schedule               Schedule[]
+    TeachingLoad           TeachingLoad? @relation(fields: [teachingLoadSchoolYear], references: [schoolYear])
+    teachingLoadSchoolYear String?
+}
+
+model Teachers {
+    teacherCode             String               @id @unique
+    name                    String
+    surname                 String
+    patronymic              String
+    birthday                DateTime
+    position                String
+    academicDegree          String
+    academicTitle           String
+    occupiedRate            String
+    employmentContract      String
+    professionalDevelopment String
+    jobDescription          Boolean
+    email                   String
+    phone                   String
+    schedule                Schedule[]
+    publishing              PublishingActivity[]
+    teachingLoad            TeachingLoad[]
+}
+
+model PublishingActivity {
+    editionCode         String    @id @unique
+    editionName         String
+    autorCode           String
+    editionDate         DateTime
+    confirmed           Boolean
+    Teachers            Teachers? @relation(fields: [teachersTeacherCode], references: [teacherCode])
+    teachersTeacherCode String?
+}
+
+model TeachingLoad {
+    schoolYear          String        @id
+    instructorCode      String
+    hoursSum            String
+    Teachers            Teachers?     @relation(fields: [teachersTeacherCode], references: [teacherCode])
+    teachersTeacherCode String?
+    disciplines         Disciplines[]
+}
