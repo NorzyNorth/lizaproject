@@ -22,8 +22,9 @@ body {
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
-    )
+    ) no-repeat
     rgb(var(--background-start-rgb));
+    min-height: 100vh;
 }
 
 @layer utilities {
