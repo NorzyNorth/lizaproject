@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import Structures from "./managment"
+import Structures from "./management"
 import { prisma } from "../../../lib/prisma"
 import { NextRequest } from "next/server";
 

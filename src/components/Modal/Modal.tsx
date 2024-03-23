@@ -6,14 +6,15 @@ import { useState } from 'react';
 
 interface ModalProps {
   activeRow: Row | null;
-  data: any;
+  name: 'teachers' | 'disciplines' | 'activity';
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   titles: string[];
   columns: string[];
-  setActiveRow: React.Dispatch<React.SetStateAction<Row | null>>
+  setActiveRow: React.Dispatch<React.SetStateAction<Row | null>>;
+  isMain: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({activeRow, data, setIsModal, titles, columns, setActiveRow}) => {
+const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, columns, setActiveRow, isMain = false}) => {
   const [inputs, setInputs] = useState(titles.map((title, index) => {
     return {
       id: index,
@@ -40,9 +41,25 @@ const Modal: React.FC<ModalProps> = ({activeRow, data, setIsModal, titles, colum
     const newRow = getNewRow(inputs.map(input => input.value));
     
     if (activeRow?.id) {
-      const res = postAdd(newRow); // Тут если добавить новый элемент в таблицу
+
+      // Добавить новый элемент в таблицу
+      fetch(`/api/${name}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newRow),
+      })
     } else {
-      const res = putSet(newRow) // Тут если изменить имеющийся элемент из таблицы
+
+      // Изменить имеющийся элемент
+      fetch(name === 'teachers' ? '/api/teachers' : '/api/disciplines', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newRow),
+      })
     }
 
     setIsModal(false);
@@ -71,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, data, setIsModal, titles, colum
         setActiveRow(null);
         }}></div>
       <div className={s.modal}>
-          <h2 className={s.title}>{data?.name}</h2>
+          {activeRow?.id && <h2 className={s.title}>{inputs[0].value}</h2>}
           <form className={s.form} onSubmit={handleSubmit}>
             {inputs?.map((input, index) => (
               <div key={input.id}>
@@ -82,13 +99,13 @@ const Modal: React.FC<ModalProps> = ({activeRow, data, setIsModal, titles, colum
               </div>
             ))}
             
-            <div className={s.buttons}>
+            {!isMain && <div className={s.buttons}>
               <button className={s.buttonDelete} onClick={() => {
                 setIsModal(false); 
                 setActiveRow(null);
               }}>{activeRow?.id ? 'Удалить': 'Отменить'}</button>
               <button className={s.buttonAdd}>{activeRow?.id ? 'Сохранить изменения' : 'Добавить'}</button>
-            </div>
+            </div>}
           </form>
           <Image className={s.close} src={close} alt='close' onClick={() => {
             setIsModal(false); 
