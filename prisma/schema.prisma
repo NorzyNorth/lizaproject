@@ -22,14 +22,14 @@ model Disciplines {
 
 model Teachers {
     teacherCode             String               @id @unique
-    name                    String
+    name                    String 
     surname                 String
     patronymic              String
     birthday                DateTime
     position                String
     academicDegree          String
     academicTitle           String
-    occupiedRate            String
+    occupiedRate            String 
     employmentContract      String
     professionalDevelopment String
     jobDescription          Boolean
