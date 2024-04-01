@@ -30,7 +30,7 @@ export default class Teachers {
   }
 
   async getOne(teacherCode: string) {
-    return await prisma.teachers.findMany({
+    return await prisma.teachers.findUnique({
       where: {
         teacherCode: teacherCode,
       },

@@ -7,29 +7,28 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-
 model Disciplines {
-    disciplineCode         String        @id @unique
-    name                   String
-    hoursLK                String
-    hoursPZ                String
-    hoursLR                String
-    hoursKP                String
-    hoursDiplom            String
-    TeachingLoad           TeachingLoad? @relation(fields: [teachingLoadSchoolYear], references: [schoolYear])
-    teachingLoadSchoolYear String?
+    disciplineCode String        @id @unique
+    name           String
+    hoursLK        String
+    hoursPZ        String
+    hoursLR        String
+    hoursKP        String
+    hoursDiplom    String
+    TeachingLoad   TeachingLoad? @relation(fields: [teachingLoadid], references: [id])
+    teachingLoadid String?
 }
 
 model Teachers {
     teacherCode             String               @id @unique
-    name                    String 
+    name                    String
     surname                 String
     patronymic              String
     birthday                DateTime
     position                String
     academicDegree          String
     academicTitle           String
-    occupiedRate            String 
+    occupiedRate            String
     employmentContract      String
     professionalDevelopment String
     jobDescription          Boolean
@@ -50,7 +49,8 @@ model PublishingActivity {
 }
 
 model TeachingLoad {
-    schoolYear          String        @id
+    id                  String        @id @default(uuid())
+    schoolYear          String
     instructorCode      String
     hoursSum            String
     Teachers            Teachers?     @relation(fields: [teachersTeacherCode], references: [teacherCode])
