@@ -17,7 +17,6 @@ const Layout: React.FC<LayoutProps> = ({route, children}) => {
             <header className={s.header}>
               {route === ROUTES.HOME && <p>Главная</p>}
               {route === ROUTES.TEACHERS && <p>Преподаватели</p>}
-              {route === ROUTES.SCHEDULE && <p>Расписание</p>}
               {route === ROUTES.DISCIPLINES && <p>Дисциплины</p>}
             </header>
             <div className={s.content}>
