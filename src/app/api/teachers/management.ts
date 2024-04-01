@@ -1,6 +1,9 @@
 import { prisma } from "../../../lib/prisma";
 
 export default class Teachers {
+  constructor(){
+    
+  }
   async add(body: any) {
     if (
       await prisma.teachers.findFirst({
