@@ -25,17 +25,15 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
     }
   }))
 
-  console.log(activeRow)
-
   const getNewRow = (inputs: any[]) => {
     const newRow: any = {};
     
     if (inputs) {
       inputs.map((input, index) => {
-        console.log(input, columns[index], index)
-        if (input.title === 'teachersCode') {
-          newRow['teacherCode'] = Math.random().toString(36).substring(7);
-        } else if (columns[index] === 'birthday' || columns[index] === 'editionDate') {
+        // if (input.title === 'teachersCode') {
+        //   newRow['teacherCode'] = Math.random().toString(36).substring(7);
+        // } else 
+        if (columns[index] === 'birthday' || columns[index] === 'editionDate') {
           newRow[columns[index]] = new Date(input.value);
         } else if (columns[index] === 'jobDescription' || columns[index] === 'confirmed') {
           newRow[columns[index]] = !!input.value;
@@ -47,13 +45,9 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
 
     return newRow;
   }
-
-  console.log(activeRow?.teacherCode);
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(getNewRow(inputs.map((input: any) => input)));
-
     const newRow = getNewRow(inputs.map((input: any) => input));
     
     if (!activeRow?.teacherCode) {
@@ -69,7 +63,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
     } else {
 
       // Изменить имеющийся элемент
-      fetch(name === 'teachers' ? '/api/teachers' : '/api/disciplines', {
+      fetch(`/api/${name}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +102,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
       <div className={s.modal}>
           {activeRow?.teacherCode && <h2 className={s.title}>{inputs[1].value} {inputs[2].value} {inputs[3].value}</h2>}
           <form className={s.form} onSubmit={handleSubmit}>
-            {inputs?.map((input: any, index: string) => input.title !== 'teacherCode' && (
+            {/* input.title !== 'teacherCode' &&  */}
+            {inputs?.map((input: any, index: string) => ( 
               <div key={input.id}>
                 <label>
                   {input.title}
