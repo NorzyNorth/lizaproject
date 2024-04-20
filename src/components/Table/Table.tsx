@@ -36,6 +36,8 @@ const Table = ({data, name, isMain = false}: {data: any, name: 'teachers' | 'dis
       const titles = isMain ? ['ФИО', 'Должность', 'E-mail', 'Адрес', 'Телефон'].slice(0,3) : ['ФИО', 'Должность', 'E-mail', 'Адрес', 'Телефон'];
       const [columns, setColumns] = useState(isMain ? Object.keys((rows[0])).slice(1).slice(0,3) : Object.keys((rows[0])).slice(1));
       const [activeRow, setActiveRow] = useState<Row | null>(null);
+
+      console.log(data);
     
       const handlePageChange = (newPage: number) => {
         setPage(newPage);
