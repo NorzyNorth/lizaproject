@@ -4,19 +4,20 @@ import close from '../../../public/close.png';
 import Image from 'next/image';
 import { useState } from 'react';
 import { generateRandomTeacherData } from '@/utils/mockData';
+import { getColumns, getTitles } from '@/utils/getters';
 
 interface ModalProps {
   activeRow: any;
   name: 'teachers' | 'disciplines' | 'activity';
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  titles: string[];
-  columns: string[];
   setActiveRow: React.Dispatch<React.SetStateAction<Row | null>>;
   isMain: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, columns, setActiveRow, isMain = false}) => {
-  const [inputs, setInputs] = useState(titles.map((title, index) => {
+const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow, isMain = false}) => {
+  const titles: any = getTitles(name, true);
+  const columns: any = getColumns(name, true);
+  const [inputs, setInputs] = useState(titles?.map((title: string, index: number) => {
     return {
       id: index,
       title: title,
@@ -24,13 +25,23 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
     }
   }))
 
-  console.log(isMain)
+  console.log(activeRow)
 
-  const getNewRow = (values: string[]) => {
+  const getNewRow = (inputs: any[]) => {
     const newRow: any = {};
-    if (values) {
-      values.map((value, index) => {
-        newRow[columns[index]] = value;
+    
+    if (inputs) {
+      inputs.map((input, index) => {
+        console.log(input, columns[index], index)
+        if (input.title === 'teachersCode') {
+          newRow['teacherCode'] = Math.random().toString(36).substring(7);
+        } else if (columns[index] === 'birthday' || columns[index] === 'editionDate') {
+          newRow[columns[index]] = new Date(input.value);
+        } else if (columns[index] === 'jobDescription' || columns[index] === 'confirmed') {
+          newRow[columns[index]] = !!input.value;
+        } else {
+          newRow[columns[index]] = input.value;
+        }
       })
     }
 
@@ -41,9 +52,9 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(getNewRow(inputs.map(input => input.value)));
+    console.log(getNewRow(inputs.map((input: any) => input)));
 
-    const newRow = getNewRow(inputs.map(input => input.value));
+    const newRow = getNewRow(inputs.map((input: any) => input));
     
     if (!activeRow?.teacherCode) {
 
@@ -53,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(JSON.stringify(generateRandomTeacherData())),
+        body: JSON.stringify(newRow),
       }).then((response) => console.log(response.json()))
     } else {
 
@@ -73,8 +84,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputs(inputs => {
-      const newInputs = inputs.map(input => {
+    setInputs((inputs: any) => {
+      const newInputs = inputs.map((input: any) => {
         if (input.title === name) {
           return { ...input, value: value };
         }
@@ -86,6 +97,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
     });
   }
 
+  console.log(inputs)
+
   return (
     <>
       <div className={s.overlay} onClick={() => {
@@ -93,9 +106,9 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
         setActiveRow(null);
         }}></div>
       <div className={s.modal}>
-          {activeRow?.teacherCode && <h2 className={s.title}>{inputs[0].value}</h2>}
+          {activeRow?.teacherCode && <h2 className={s.title}>{inputs[1].value} {inputs[2].value} {inputs[3].value}</h2>}
           <form className={s.form} onSubmit={handleSubmit}>
-            {inputs?.map((input, index) => (
+            {inputs?.map((input: any, index: string) => input.title !== 'teacherCode' && (
               <div key={input.id}>
                 <label>
                   {input.title}
