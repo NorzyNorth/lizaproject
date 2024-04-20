@@ -3,9 +3,10 @@ import { Row } from "../Table/Table";
 import close from '../../../public/close.png';
 import Image from 'next/image';
 import { useState } from 'react';
+import { generateRandomTeacherData } from '@/utils/mockData';
 
 interface ModalProps {
-  activeRow: Row | null;
+  activeRow: any;
   name: 'teachers' | 'disciplines' | 'activity';
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   titles: string[];
@@ -26,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
   console.log(isMain)
 
   const getNewRow = (values: string[]) => {
-    const newRow = {};
+    const newRow: any = {};
     if (values) {
       values.map((value, index) => {
         newRow[columns[index]] = value;
@@ -35,6 +36,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
 
     return newRow;
   }
+
+  console.log(activeRow?.teacherCode);
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
 
     const newRow = getNewRow(inputs.map(input => input.value));
     
-    if (activeRow?.id) {
+    if (!activeRow?.teacherCode) {
 
       // Добавить новый элемент в таблицу
       fetch(`/api/${name}`, {
@@ -50,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newRow),
+        body: JSON.stringify(JSON.stringify(generateRandomTeacherData())),
       }).then((response) => console.log(response.json()))
     } else {
 
@@ -90,14 +93,14 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
         setActiveRow(null);
         }}></div>
       <div className={s.modal}>
-          {activeRow?.id && <h2 className={s.title}>{inputs[0].value}</h2>}
+          {activeRow?.teacherCode && <h2 className={s.title}>{inputs[0].value}</h2>}
           <form className={s.form} onSubmit={handleSubmit}>
             {inputs?.map((input, index) => (
               <div key={input.id}>
                 <label>
                   {input.title}
                 </label>
-                <input value={input.value} onChange={handleChange} name={input.title} placeholder={input.title} className={s.input} type="text" />
+                <input disabled={isMain} value={input.value} onChange={handleChange} name={input.title} placeholder={input.title} className={s.input} type="text" />
               </div>
             ))}
             
@@ -105,8 +108,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
               <button className={s.buttonDelete} onClick={() => {
                 setIsModal(false); 
                 setActiveRow(null);
-              }}>{activeRow?.id ? 'Удалить': 'Отменить'}</button>
-              <button className={s.buttonAdd}>{activeRow?.id ? 'Сохранить изменения' : 'Добавить'}</button>
+              }}>{activeRow?.teacherCode ? 'Удалить': 'Отменить'}</button>
+              <button className={s.buttonAdd}>{activeRow?.teacherCode ? 'Сохранить изменения' : 'Добавить'}</button>
             </div>}
           </form>
           <Image className={s.close} src={close} alt='close' onClick={() => {
