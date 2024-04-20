@@ -23,6 +23,8 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
     }
   }))
 
+  console.log(isMain)
+
   const getNewRow = (values: string[]) => {
     const newRow = {};
     if (values) {
@@ -49,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, titles, colum
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newRow),
-      })
+      }).then((response) => console.log(response.json()))
     } else {
 
       // Изменить имеющийся элемент

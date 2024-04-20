@@ -7,5 +7,5 @@ export default async function getTeachers() {
       console.log('Failed to fetch data')
     }
    
-    return res.json().data;
+    return res.json();
   }

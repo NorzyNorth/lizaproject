@@ -15,7 +15,7 @@ export interface Row {
   col5: string;
 }
 
-const Table = ({data, name, isMain: isMain = false}: {data: any, name: 'teachers' | 'disciplines' | 'activity', isMain?: boolean}) => {
+const Table = ({data, name, isMain = false}: {data: any, name: 'teachers' | 'disciplines' | 'activity', isMain?: boolean}) => {
     const [rows, setRows] = useState<Row[]>([
         { id: '1', col1: 'ФИО 1', col2: 'Value 2', col3: 'Value 3', col4: 'Value 4', col5: 'Value 5' },
         { id: '2', col1: 'ФИО 1', col2: 'Value 2', col3: 'Value 3', col4: 'Value 4', col5: 'Value 5' },
@@ -70,7 +70,7 @@ const Table = ({data, name, isMain: isMain = false}: {data: any, name: 'teachers
         <button className={s.next} disabled={paginatedRows.length < pageSize} onClick={() => handlePageChange(page + 1)}>Next</button>
       </div>}
 
-      {isModal && <Modal isMain activeRow={activeRow} name={name} setIsModal={setIsModal} titles={titles} columns={columns} setActiveRow={setActiveRow} />}
+      {isModal && <Modal isMain={isMain} activeRow={activeRow} name={name} setIsModal={setIsModal} titles={titles} columns={columns} setActiveRow={setActiveRow} />}
     </div>
   );
 };
