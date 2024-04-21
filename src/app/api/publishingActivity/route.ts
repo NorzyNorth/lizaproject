@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
     const publishingActivity = new PublishingActivity();
     const res = await publishingActivity.get();
     return NextResponse.json(res, { status: 200 });
+    console.log('ppp')
   } catch (e: any) {
     console.log("Error: ", e);
     return NextResponse.json(e, { status: 500 });
