@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log(body)
     const teachers = new Teachers();
     const res = await teachers.add(body);
     return NextResponse.json(res, { status: 200 });

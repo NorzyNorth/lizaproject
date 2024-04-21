@@ -12,13 +12,13 @@ export default class PublishingActivity {
     ) {
       throw new Error("Издательская деятельность с таким кодом уже есть");
     }
-    const res = await prisma.publishingActivity.create({
+    return await prisma.publishingActivity.create({
       data: body,
     });
   }
 
   async delete(editionCode: string) {
-    const res = await prisma.publishingActivity.delete({
+    return await prisma.publishingActivity.delete({
       where: {
         editionCode: editionCode,
       },

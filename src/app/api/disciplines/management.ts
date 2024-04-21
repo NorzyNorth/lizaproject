@@ -12,13 +12,13 @@ export default class Disciplines {
     ) {
       throw new Error("Дисциплина с таким кодом уже есть");
     }
-    const res = await prisma.disciplines.create({
+    return await prisma.disciplines.create({
       data: body,
     });
   }
 
   async delete(disciplineCode: string) {
-    const res = await prisma.disciplines.delete({
+    return await prisma.disciplines.delete({
       where: {
         disciplineCode: disciplineCode,
       },

@@ -12,13 +12,13 @@ export default class Teachers {
     ) {
       throw new Error("Преподователь с таким кодом уже есть");
     }
-    const res = await prisma.teachers.create({
+    return await prisma.teachers.create({
       data: body,
     });
   }
 
   async delete(teacherCode: string) {
-    const res = await prisma.teachers.delete({
+    return await prisma.teachers.delete({
       where: {
         teacherCode: teacherCode,
       },

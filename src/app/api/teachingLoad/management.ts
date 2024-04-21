@@ -10,13 +10,13 @@ export default class TeachingLoad {
     ) {
       throw new Error("Нагрузки с таким кодом уже есть");
     }
-    const res = await prisma.teachingLoad.create({
+    return await prisma.teachingLoad.create({
       data: body,
     });
   }
 
   async delete(id: string) {
-    const res = await prisma.teachingLoad.delete({
+    return await prisma.teachingLoad.delete({
       where: {
         id : id,
       },
