@@ -11,7 +11,7 @@ export const getColumns = (name: any, isFull: boolean = false) => {
             return COLUMNS_DISCIPLINES_FULL;
         }
         return COLUMNS_DISCIPLINES;
-    } else if (name === 'activity') {
+    } else if (name === 'publishingActivity') {
         if (isFull) {
             return COLUMNS_ACTIVITY_FULL;
         }
@@ -30,7 +30,7 @@ export const getTitles = (name: any, isFull: boolean = false) => {
             return TITLES_DISCIPLINES_FULL.map((title) => title);
         }
         return TITLES_DISCIPLINES.map((title) => title);
-    } else if (name === 'activity') {
+    } else if (name === 'publishingActivity') {
         if (isFull) {
             return TITLES_ACTIVITY_FULL.map((title) => title);
         }

@@ -5,19 +5,20 @@ import Table from '@/components/Table/Table';
 import { ROUTES } from '@/types/types';
 import getTeachers from '@/requests/getTeachers';
 import { useEffect, useState } from 'react';
+import getActivity from '@/requests/getActivity';
 
-export default function Teachers() {
-  const [teachers, setTeachers] = useState([]);
+export default function Activity() {
+  const [activity, setActivity] = useState([]);
 
   useEffect(() => {
-    getTeachers().then((res) => {
-      setTeachers(res);
+    getActivity().then((res) => {
+        setActivity(res);
     });
   }, []);
 
   return (
-    <Layout route={ROUTES.TEACHERS}>
-      <Table data={teachers} name='teachers' />
+    <Layout route={ROUTES.ACTIVITY}>
+      <Table data={activity} name='publishingActivity' />
     </Layout>
   );
 }

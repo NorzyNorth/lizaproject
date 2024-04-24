@@ -32,7 +32,6 @@ export const TITLES_DISCIPLINES_FULL = [
     "часы LR",
     "часы KP",
     "часы дипломных работ",
-    "Идентификатор учебной нагрузки"
 ]
 
 export const TITLES_DISCIPLINES = [
@@ -50,7 +49,6 @@ export const TITLES_ACTIVITY_FULL = [
     'код автора',
     'дата издания',
     'подтверждение',
-    'код преподавателя'
 ]
 
 export const TITLES_ACTIVITY = [
@@ -59,7 +57,6 @@ export const TITLES_ACTIVITY = [
     'код автора',
     'дата издания',
     'подтверждение',
-    'код преподавателя'
 ]
 
 export const COLUMNS_TEACHERS_FULL = [
@@ -86,8 +83,7 @@ export const COLUMNS_DISCIPLINES_FULL = [
     'hoursPZ',
     'hoursLR',
     'hoursKP',
-    'hoursDiplom',
-    'teachingLoadid'
+    'hoursDiplom'
 ]
 
 
@@ -97,7 +93,6 @@ export const COLUMNS_ACTIVITY_FULL = [
     'autorCode',
     'editionDate',
     'confirmed',
-    'teachersTeacherCode'
 ]
 
 export const COLUMNS_TEACHERS = [
@@ -110,14 +105,12 @@ export const COLUMNS_TEACHERS = [
 ]
 
 export const COLUMNS_DISCIPLINES = [
-    'disciplineCode',
     'name',
     'hoursLK',
     'hoursPZ',
     'hoursLR',
     'hoursKP',
     'hoursDiplom',
-    'teachingLoadid'
     
 ]
 
@@ -128,5 +121,4 @@ export const COLUMNS_ACTIVITY = [
     'autorCode',
     'editionDate',
     'confirmed',
-    'teachersTeacherCode'
 ]

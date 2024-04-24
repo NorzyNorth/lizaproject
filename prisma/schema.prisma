@@ -34,8 +34,8 @@ model Teachers {
     jobDescription          Boolean
     email                   String
     phone                   String
-    publishing              PublishingActivity[]
-    teachingLoad            TeachingLoad[]
+    publishing              PublishingActivity[]?
+    teachingLoad            TeachingLoad[]?
 }
 
 model PublishingActivity {

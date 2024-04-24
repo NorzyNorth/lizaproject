@@ -24,6 +24,11 @@ const Navigation = () => {
                         <p>Дисциплины</p>
                 </button>
         </Link>
+        <Link href={'/activity'} className={s.link}>
+                <button className={s.button}>
+                        <p>Активность</p>
+                </button>
+        </Link>
       </div>
     </nav>
   );

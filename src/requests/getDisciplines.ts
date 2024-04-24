@@ -7,5 +7,5 @@ export default async function getDisciplines() {
       throw new Error('Failed to fetch data')
     }
    
-    return res.json().data;
+    return res.json();
   }

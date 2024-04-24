@@ -38,8 +38,6 @@ const generateRandomTeacherData = () => {
     const publishing = generateRandomPublishingActivityData();
     const teachingLoad = generateRandomTeachingLoadData();
 
-    console.log(teacherCode);
-
     return {
         teacherCode,
         name,
