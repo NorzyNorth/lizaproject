@@ -109,14 +109,24 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
             
             {!isMain && <div className={s.buttons}>
               <button className={s.buttonDelete} onClick={() => {
-                const newRow = getNewRow(inputs.map((input: any) => input));
+                // const newRow = getNewRow(inputs.map((input: any) => input));
+
+                const getId = () => {
+                  if (activeRow?.teacherCode) {
+                    return {teacherCode: activeRow?.teacherCode};
+                  } else if (activeRow?.disciplineCode) {
+                    return {teacherCode: activeRow?.disciplineCode};
+                  } else {
+                    return {teacherCode: activeRow?.editionCode};
+                  }
+                }
 
                 fetch(`/api/${name}`, {
                   method: 'DELETE',
                   headers: {
                     'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify(newRow),
+                  body: JSON.stringify(getId()),
                 }).then((response) => console.log(response.json()))
                 setIsModal(false); 
                 setActiveRow(null);
