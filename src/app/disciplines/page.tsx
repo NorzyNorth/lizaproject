@@ -8,6 +8,17 @@ import { useEffect, useState } from 'react';
 
 export default function Disciplines() {
   const [disciplines, setDisciplines] = useState([]);
+  const [sendedRequests, setSendedRequests] = useState(1);
+
+  useEffect(() => {
+    if (sendedRequests > 0) {
+      setTimeout(() => {
+        getDisciplines().then((res) => {
+          setDisciplines(res);
+        });
+      }, 2000)
+    }
+  }, [sendedRequests]);
 
   useEffect(() => {
     getDisciplines().then((res) => {
@@ -17,7 +28,7 @@ export default function Disciplines() {
 
   return (
     <Layout route={ROUTES.DISCIPLINES}>
-      <Table data={disciplines} name={'disciplines'} />
+      <Table setSendedRequests={setSendedRequests} data={disciplines} name={'disciplines'} />
     </Layout>
   );
 }

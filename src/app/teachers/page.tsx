@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 export default function Teachers() {
   const [teachers, setTeachers] = useState([]);
+  const [sendedRequests, setSendedRequests] = useState(1);
 
   useEffect(() => {
     getTeachers().then((res) => {
@@ -15,9 +16,19 @@ export default function Teachers() {
     });
   }, []);
 
+  useEffect(() => {
+    if (sendedRequests > 0) {
+      setTimeout(() => {
+        getTeachers().then((res) => {
+          setTeachers(res);
+        });
+      }, 2000)
+    }
+  }, [sendedRequests]);
+
   return (
     <Layout route={ROUTES.TEACHERS}>
-      <Table data={teachers} name='teachers' />
+      <Table setSendedRequests={setSendedRequests} data={teachers} name='teachers' />
     </Layout>
   );
 }

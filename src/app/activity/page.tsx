@@ -9,6 +9,17 @@ import getActivity from '@/requests/getActivity';
 
 export default function Activity() {
   const [activity, setActivity] = useState([]);
+  const [sendedRequests, setSendedRequests] = useState(1);
+
+  useEffect(() => {
+    if (sendedRequests > 0) {
+      setTimeout(() => {
+        getActivity().then((res) => {
+          setActivity(res);
+      });
+      }, 2000)
+    }
+  }, [sendedRequests]);
 
   useEffect(() => {
     getActivity().then((res) => {
@@ -18,7 +29,7 @@ export default function Activity() {
 
   return (
     <Layout route={ROUTES.ACTIVITY}>
-      <Table data={activity} name='publishingActivity' />
+      <Table setSendedRequests={setSendedRequests} data={activity} name='publishingActivity' />
     </Layout>
   );
 }

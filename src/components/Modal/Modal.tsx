@@ -5,6 +5,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { generateRandomTeacherData } from '@/utils/mockData';
 import { getColumns, getTitles } from '@/utils/getters';
+import { formattedDate } from '@/utils/formattedData';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface ModalProps {
   activeRow: any;
@@ -12,9 +15,12 @@ interface ModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveRow: React.Dispatch<React.SetStateAction<Row | null>>;
   isMain: boolean;
+  setSendedRequests: any;
+  handleDateChange: any;
+  selectedDate: any;
 }
 
-const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow, isMain = false}) => {
+const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow, isMain = false, setSendedRequests, handleDateChange, selectedDate}) => {
   const titles: any = getTitles(name, true);
   const columns: any = getColumns(name, true);
   const [inputs, setInputs] = useState(titles?.map((title: string, index: number) => {
@@ -24,6 +30,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
       value: activeRow ? activeRow[columns[index]] : '',
     }
   }))
+  const isCode = activeRow?.teacherCode || activeRow?.disciplineCode || activeRow?.editionCode;
 
   const getNewRow = (inputs: any[]) => {
     const newRow: any = {};
@@ -31,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
     if (inputs) {
       inputs.map((input, index) => {
           if (columns[index] === 'birthday' || columns[index] === 'editionDate') {
-            newRow[columns[index]] = new Date(input.value);
+            newRow[columns[index]] = new Date(selectedDate);
           } else if (columns[index] === 'jobDescription' || columns[index] === 'confirmed') {
             newRow[columns[index]] = !!input.value;
           } else {
@@ -47,7 +54,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
     e.preventDefault();
     const newRow = getNewRow(inputs.map((input: any) => input));
     
-    if (!activeRow?.teacherCode) {
+    if (!isCode) {
 
       // Добавить новый элемент в таблицу
       fetch(`/api/${name}`, {
@@ -71,6 +78,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
 
     setIsModal(false);
     setActiveRow(null);
+    setSendedRequests((value: number) => value + 1)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +96,21 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
     });
   }
 
+  const getInput = (input: any) => {
+    if (input.title === 'дата издания' || input.title === 'дата рождения') {
+      return <div><DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Выберите дату"
+            className={s.input}
+            disabled={isMain}
+          /></div>;
+    } else {
+      return <input disabled={isMain} value={input.value} onChange={handleChange} name={input.title} placeholder={input.title} className={s.input} type="text" />
+    }
+  }
+
   return (
     <>
       <div className={s.overlay} onClick={() => {
@@ -100,10 +123,10 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
             {/* input.title !== 'teacherCode' &&  */}
             {inputs?.map((input: any, index: string) => ( 
               <div key={input.id}>
-                <label>
+                <label className={s.inputTitle}>
                   {input.title}
                 </label>
-                <input disabled={isMain} value={input.value} onChange={handleChange} name={input.title} placeholder={input.title} className={s.input} type="text" />
+                {getInput(input)}
               </div>
             ))}
             
@@ -130,8 +153,9 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
                 }).then((response) => console.log(response.json()))
                 setIsModal(false); 
                 setActiveRow(null);
+                setSendedRequests((value: number) => value + 1)
               }}>{activeRow ? 'Удалить': 'Отменить'}</button>
-              <button className={s.buttonAdd}>{activeRow?.teacherCode ? 'Сохранить изменения' : 'Добавить'}</button>
+              <button className={s.buttonAdd}>{isCode ? 'Сохранить изменения' : 'Добавить'}</button>
             </div>}
           </form>
           <Image className={s.close} src={close} alt='close' onClick={() => {

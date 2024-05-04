@@ -36,9 +36,10 @@
         border-radius: 12px;
 
         .thead {
-            .tr {
+                .tr {
+                text-transform: capitalize;
                 th {
-                    text-align: start;
+                text-align: start;
                     min-width: 170px;
                     min-height: 100px;
                     border: 1px solid #CCC;
@@ -88,3 +89,8 @@
 
         }
     }
+    
+.center {
+    display: flex;
+    justify-content: center;
+}
