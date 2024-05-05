@@ -59,6 +59,20 @@ export const TITLES_ACTIVITY = [
     'подтверждение',
 ]
 
+export const TITLES_TEACHING_LOAD_FULL = [
+    "идентификатор",
+    "Учебный год", 
+    "Код преподавателя",
+    "Количество часов",
+]
+
+export const TITLES_TEACHING_LOAD = [
+    "идентификатор",
+    "Учебный год", 
+    "Код преподавателя",
+    "Количество часов",
+]
+
 export const COLUMNS_TEACHERS_FULL = [
     'teacherCode',
     'name',
@@ -95,6 +109,13 @@ export const COLUMNS_ACTIVITY_FULL = [
     'confirmed',
 ]
 
+export const COLUMNS_TEACHING_LOAD_FULL = [
+    'id',
+    'schoolYear',
+    'instructorCode',
+    'hoursSum',
+]
+
 export const COLUMNS_TEACHERS = [
     'name',
     'surname',
@@ -121,4 +142,11 @@ export const COLUMNS_ACTIVITY = [
     'autorCode',
     'editionDate',
     'confirmed',
+]
+
+export const COLUMNS_TEACHING_LOAD = [
+    'id',
+    'schoolYear',
+    'instructorCode',
+    'hoursSum',
 ]

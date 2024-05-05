@@ -29,6 +29,11 @@ const Navigation = () => {
                         <p>Активность</p>
                 </button>
         </Link>
+        <Link href={'/teachingLoad'} className={s.link}>
+                <button className={s.button}>
+                        <p>Учебная нагрузка</p>
+                </button>
+        </Link>
       </div>
     </nav>
   );

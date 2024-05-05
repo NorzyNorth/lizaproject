@@ -1,4 +1,4 @@
-import { COLUMNS_ACTIVITY, COLUMNS_ACTIVITY_FULL, COLUMNS_DISCIPLINES, COLUMNS_DISCIPLINES_FULL, COLUMNS_TEACHERS, COLUMNS_TEACHERS_FULL, TITLES_ACTIVITY, TITLES_ACTIVITY_FULL, TITLES_DISCIPLINES, TITLES_DISCIPLINES_FULL, TITLES_TEACHERS, TITLES_TEACHERS_FULL } from "@/constants/constants"
+import { COLUMNS_ACTIVITY, COLUMNS_ACTIVITY_FULL, COLUMNS_DISCIPLINES, COLUMNS_DISCIPLINES_FULL, COLUMNS_TEACHERS, COLUMNS_TEACHERS_FULL, COLUMNS_TEACHING_LOAD, COLUMNS_TEACHING_LOAD_FULL, TITLES_ACTIVITY, TITLES_ACTIVITY_FULL, TITLES_DISCIPLINES, TITLES_DISCIPLINES_FULL, TITLES_TEACHERS, TITLES_TEACHERS_FULL, TITLES_TEACHING_LOAD, TITLES_TEACHING_LOAD_FULL } from "@/constants/constants"
 
 export const getColumns = (name: any, isFull: boolean = false) => {
     if (name === 'teachers') {
@@ -16,6 +16,11 @@ export const getColumns = (name: any, isFull: boolean = false) => {
             return COLUMNS_ACTIVITY_FULL;
         }
         return COLUMNS_ACTIVITY;
+    } else if (name === 'teachingLoad') {
+        if (isFull) {
+            return COLUMNS_TEACHING_LOAD_FULL;
+        }
+        return COLUMNS_TEACHING_LOAD;
     }
 }
 
@@ -35,5 +40,10 @@ export const getTitles = (name: any, isFull: boolean = false) => {
             return TITLES_ACTIVITY_FULL.map((title) => title);
         }
         return TITLES_ACTIVITY.map((title) => title);
+    } else if (name === 'teachingLoad') {
+        if (isFull) {
+            return TITLES_TEACHING_LOAD_FULL.map((title) => title);
+        }
+        return TITLES_TEACHING_LOAD.map((title) => title);
     }
 }

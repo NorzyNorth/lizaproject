@@ -1,19 +1,16 @@
 import s from './Modal.module.scss';
-import { Row } from "../Table/Table";
 import close from '../../../public/close.png';
 import Image from 'next/image';
 import { useState } from 'react';
-import { generateRandomTeacherData } from '@/utils/mockData';
 import { getColumns, getTitles } from '@/utils/getters';
-import { formattedDate } from '@/utils/formattedData';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface ModalProps {
   activeRow: any;
-  name: 'teachers' | 'disciplines' | 'publishingActivity';
+  name: 'teachers' | 'disciplines' | 'publishingActivity' | 'teachingLoad';
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setActiveRow: React.Dispatch<React.SetStateAction<Row | null>>;
+  setActiveRow: React.Dispatch<React.SetStateAction<any | null>>;
   isMain: boolean;
   setSendedRequests: any;
   handleDateChange: any;
@@ -30,17 +27,22 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
       value: activeRow ? activeRow[columns[index]] : '',
     }
   }))
-  const isCode = activeRow?.teacherCode || activeRow?.disciplineCode || activeRow?.editionCode;
+  const isCode = activeRow?.teacherCode || activeRow?.disciplineCode || activeRow?.editionCode || activeRow?.id;
 
   const getNewRow = (inputs: any[]) => {
     const newRow: any = {};
     
     if (inputs) {
+      console.log(inputs);
       inputs.map((input, index) => {
+        console.log(columns, columns[index], newRow[columns[index]])
           if (columns[index] === 'birthday' || columns[index] === 'editionDate') {
             newRow[columns[index]] = new Date(selectedDate);
-          } else if (columns[index] === 'jobDescription' || columns[index] === 'confirmed') {
+          } else if (columns[index] === 'jobDescription') {
             newRow[columns[index]] = !!input.value;
+          } else if (columns[index] === 'confirmed') {
+            console.log('123')
+            newRow[columns[index]] = false;
           } else {
             newRow[columns[index]] = input.value;
           }
@@ -106,7 +108,7 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
             className={s.input}
             disabled={isMain}
           /></div>;
-    } else {
+    } else if (input.title !== 'подтверждение') {
       return <input disabled={isMain} value={input.value} onChange={handleChange} name={input.title} placeholder={input.title} className={s.input} type="text" />
     }
   }
@@ -120,11 +122,10 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
       <div className={s.modal}>
           {activeRow?.teacherCode && <h2 className={s.title}>{inputs[1].value} {inputs[2].value} {inputs[3].value}</h2>}
           <form className={s.form} onSubmit={handleSubmit}>
-            {/* input.title !== 'teacherCode' &&  */}
             {inputs?.map((input: any, index: string) => ( 
               <div key={input.id}>
                 <label className={s.inputTitle}>
-                  {input.title}
+                  {input.title !== 'подтверждение' && input.title}
                 </label>
                 {getInput(input)}
               </div>
@@ -139,8 +140,10 @@ const Modal: React.FC<ModalProps> = ({activeRow, name, setIsModal, setActiveRow,
                     return {teacherCode: activeRow?.teacherCode};
                   } else if (activeRow?.disciplineCode) {
                     return {teacherCode: activeRow?.disciplineCode};
-                  } else {
+                  } else if (activeRow?.editionCode) {
                     return {teacherCode: activeRow?.editionCode};
+                  } else {
+                    return {id: activeRow?.id};
                   }
                 }
 

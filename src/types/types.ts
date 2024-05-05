@@ -3,6 +3,7 @@ enum ROUTES {
     TEACHERS = '/teachers',
     DISCIPLINES = '/disciplines',
     ACTIVITY = '/activity',
+    TEACHING_LOAD = '/teachingLoad'
 }
 
 export {ROUTES};

@@ -13,7 +13,7 @@ import arrowNext from '../../../public/assets/arrow-right.png';
 import Image from 'next/image';
 import { formattedDate } from '@/utils/formattedData';
 
-const Table = ({data, name, isMain = false, setSendedRequests}: {data: any, name: 'teachers' | 'disciplines' | 'publishingActivity', isMain?: boolean, setSendedRequests: any}) => {
+const Table = ({data, name, isMain = false, setSendedRequests}: {data: any, name: 'teachers' | 'disciplines' | 'publishingActivity' | 'teachingLoad', isMain?: boolean, setSendedRequests?: any}) => {
       const [page, setPage] = useState(1);
       const [isModal, setIsModal] = useState(false);
       const pageSize = isMain && name !== 'teachers' ? 4 : 8;
@@ -38,6 +38,8 @@ const Table = ({data, name, isMain = false, setSendedRequests}: {data: any, name
           return 'Дисциплины';
         } else if (name === 'publishingActivity') {
           return 'Активность публикаций';
+        } else {
+          return 'Учебная нагрузка';
         }
       }
 

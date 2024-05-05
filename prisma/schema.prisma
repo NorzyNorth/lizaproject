@@ -55,5 +55,5 @@ model TeachingLoad {
     hoursSum            String
     Teachers            Teachers?     @relation(fields: [teachersTeacherCode], references: [teacherCode])
     teachersTeacherCode String?
-    disciplines         Disciplines[]
+    disciplines         Disciplines[]?
 }
