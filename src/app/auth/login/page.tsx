@@ -50,9 +50,8 @@ const Page = async () => {
           </Button>
         </Form>
         <p className="mt-4 text-center">
-          Нет аккаунта?{" "}
           <Link href="/auth/register" className="text-blue-500 hover:underline">
-            Регистрация
+            Забыли логин или пароль?
           </Link>
         </p>
       </div>

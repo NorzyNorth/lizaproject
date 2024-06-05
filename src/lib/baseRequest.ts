@@ -1,4 +1,4 @@
-import { prisma } from "./prisma";
+import { prisma } from "./prismaClient";
 
 export default class TeachingLoad {
   constructor() {}

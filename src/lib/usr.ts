@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "./prismaClient";
+import { prisma } from "../lib/prismaClient";
 
 export const changeSelfUser = async (formData: FormData) => {
   const id = formData.get("id");

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Teachers from "@/app/api/teachers/management";
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "../../../lib/prismaClient";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
